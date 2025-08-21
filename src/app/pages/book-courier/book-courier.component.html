@@ -1,1 +1,81 @@
-<p>book-courier works!</p>
+<div class="container-fluid mt-4">
+	<div class="row justify-content-center">
+		<div class="col-12 col-md-8 col-lg-6">
+			<div *ngIf="!confirmation">
+						<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" novalidate>
+							<h4 class="mb-3">Sender Details</h4>
+							<div class="mb-3">
+								<label>Sender Name</label>
+								<input type="text" class="form-control" formControlName="senderName">
+								<div *ngIf="submitted && f['senderName'].errors" class="text-danger small">Required</div>
+							</div>
+							<div class="mb-3">
+								<label>Sender Phone</label>
+								<input type="tel" class="form-control" formControlName="senderPhone">
+								<div *ngIf="submitted && f['senderPhone'].errors" class="text-danger small">
+									<span *ngIf="f['senderPhone'].errors?.['required']">Required</span>
+									<span *ngIf="f['senderPhone'].errors?.['pattern']">Invalid phone number</span>
+								</div>
+							</div>
+							<div class="mb-3">
+								<label>Sender Address</label>
+								<textarea class="form-control" formControlName="senderAddress"></textarea>
+								<div *ngIf="submitted && f['senderAddress'].errors" class="text-danger small">Required</div>
+							</div>
+							<h4 class="mb-3 mt-4">Receiver Details</h4>
+							<div class="mb-3">
+								<label>Receiver Name</label>
+								<input type="text" class="form-control" formControlName="receiverName">
+								<div *ngIf="submitted && f['receiverName'].errors" class="text-danger small">Required</div>
+							</div>
+							<div class="mb-3">
+								<label>Receiver Phone</label>
+								<input type="tel" class="form-control" formControlName="receiverPhone">
+								<div *ngIf="submitted && f['receiverPhone'].errors" class="text-danger small">
+									<span *ngIf="f['receiverPhone'].errors?.['required']">Required</span>
+									<span *ngIf="f['receiverPhone'].errors?.['pattern']">Invalid phone number</span>
+								</div>
+							</div>
+							<div class="mb-3">
+								<label>Receiver Address</label>
+								<textarea class="form-control" formControlName="receiverAddress"></textarea>
+								<div *ngIf="submitted && f['receiverAddress'].errors" class="text-danger small">Required</div>
+							</div>
+							<h4 class="mb-3 mt-4">Package Details</h4>
+							<div class="mb-3">
+								<label>Package Weight (kg)</label>
+								<input type="number" min="0.01" step="0.01" class="form-control" formControlName="weight">
+								<div *ngIf="submitted && f['weight'].errors" class="text-danger small">
+									<span *ngIf="f['weight'].errors?.['required']">Required</span>
+									<span *ngIf="f['weight'].errors?.['pattern'] || f['weight'].errors?.['min']">Must be a positive number</span>
+								</div>
+							</div>
+							<div class="mb-3">
+								<label>Pickup Date & Time</label>
+								<input type="datetime-local" class="form-control" formControlName="pickupDateTime">
+								<div *ngIf="submitted && f['pickupDateTime'].errors" class="text-danger small">Required</div>
+							</div>
+							<div class="mb-3">
+								<label>Price Estimation</label>
+								<input type="text" class="form-control" formControlName="price" readonly>
+							</div>
+							<button type="submit" class="btn btn-primary w-100">Book Courier</button>
+						</form>
+			</div>
+			<div *ngIf="confirmation" class="card mt-4">
+				<div class="card-body">
+					<h5 class="card-title">Booking Confirmed!</h5>
+					<p class="card-text"><strong>Sender:</strong> {{confirmation.senderName}}, {{confirmation.senderPhone}}, {{confirmation.senderAddress}}</p>
+					<p class="card-text"><strong>Receiver:</strong> {{confirmation.receiverName}}, {{confirmation.receiverPhone}}, {{confirmation.receiverAddress}}</p>
+					<p class="card-text"><strong>Weight:</strong> {{confirmation.weight}} kg</p>
+					<p class="card-text"><strong>Pickup:</strong> {{confirmation.pickupDateTime | date:'medium'}}</p>
+					<p class="card-text"><strong>Price:</strong> Rs. {{confirmation.price}}</p>
+                    <div class="d-flex justify-content-between">
+					<button class="btn btn-success w-50 m-2" (click)="newBooking()">Book Another</button>
+                    <button class="btn btn-secondary w-50 m-2" (click)="close()">Close</button>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
