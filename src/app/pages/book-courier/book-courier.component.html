@@ -1,79 +1,108 @@
-<div class="container-fluid mt-4">
+<div class="container py-3">
 	<div class="row justify-content-center">
-		<div class="col-12 col-md-8 col-lg-6">
+		<div class="col-12 col-md-10 col-lg-8">
 			<div *ngIf="!confirmation">
-						<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" novalidate>
-							<h4 class="mb-3">Sender Details</h4>
-							<div class="mb-3">
-								<label>Sender Name</label>
-								<input type="text" class="form-control" formControlName="senderName">
-								<div *ngIf="submitted && f['senderName'].errors" class="text-danger small">Required</div>
-							</div>
-							<div class="mb-3">
-								<label>Sender Phone</label>
-								<input type="tel" class="form-control" formControlName="senderPhone">
-								<div *ngIf="submitted && f['senderPhone'].errors" class="text-danger small">
-									<span *ngIf="f['senderPhone'].errors?.['required']">Required</span>
-									<span *ngIf="f['senderPhone'].errors?.['pattern']">Invalid phone number</span>
+				<div class="card shadow-lg border-0">
+					<div class="card-body p-4">
+						<h3 class="mb-4 text-center text-primary"><i class="bi bi-truck"></i> Book a Courier</h3>
+						<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+							<div class="row g-3">
+								<!-- Sender & Receiver Details Side by Side on md+ screens -->
+								<div class="col-12 col-md-6">
+									<div class="border rounded-3 p-3 h-100 bg-light">
+										<h5 class="mb-3"><i class="bi bi-person-fill"></i> Sender</h5>
+										<div class="mb-2">
+											<label class="form-label">Name</label>
+											<input type="text" class="form-control" formControlName="senderName" placeholder="Sender Name">
+											<div *ngIf="submitted && f['senderName'].errors" class="text-danger small">Required</div>
+										</div>
+										<div class="mb-2">
+											<label class="form-label">Phone</label>
+											<input type="tel" class="form-control" formControlName="senderPhone" placeholder="Sender Phone">
+											<div *ngIf="submitted && f['senderPhone'].errors" class="text-danger small">
+												<span *ngIf="f['senderPhone'].errors?.['required']">Required</span>
+												<span *ngIf="f['senderPhone'].errors?.['pattern']">Invalid phone number</span>
+											</div>
+										</div>
+										<div class="mb-2">
+											<label class="form-label">Address</label>
+											<textarea class="form-control" formControlName="senderAddress" rows="2" placeholder="Sender Address"></textarea>
+											<div *ngIf="submitted && f['senderAddress'].errors" class="text-danger small">Required</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-md-6">
+									<div class="border rounded-3 p-3 h-100 bg-light">
+										<h5 class="mb-3"><i class="bi bi-person-badge-fill"></i> Receiver</h5>
+										<div class="mb-2">
+											<label class="form-label">Name</label>
+											<input type="text" class="form-control" formControlName="receiverName" placeholder="Receiver Name">
+											<div *ngIf="submitted && f['receiverName'].errors" class="text-danger small">Required</div>
+										</div>
+										<div class="mb-2">
+											<label class="form-label">Phone</label>
+											<input type="tel" class="form-control" formControlName="receiverPhone" placeholder="Receiver Phone">
+											<div *ngIf="submitted && f['receiverPhone'].errors" class="text-danger small">
+												<span *ngIf="f['receiverPhone'].errors?.['required']">Required</span>
+												<span *ngIf="f['receiverPhone'].errors?.['pattern']">Invalid phone number</span>
+											</div>
+										</div>
+										<div class="mb-2">
+											<label class="form-label">Address</label>
+											<textarea class="form-control" formControlName="receiverAddress" rows="2" placeholder="Receiver Address"></textarea>
+											<div *ngIf="submitted && f['receiverAddress'].errors" class="text-danger small">Required</div>
+										</div>
+									</div>
+								</div>
+								<!-- Package Details -->
+								<div class="col-12 col-md-6">
+									<div class="border rounded-3 p-3 h-100 bg-light mt-3 mt-md-0">
+										<h5 class="mb-3"><i class="bi bi-box-seam"></i> Package</h5>
+										<div class="mb-2">
+											<label class="form-label">Weight (kg)</label>
+											<input type="number" min="0.01" step="0.01" class="form-control" formControlName="weight" placeholder="e.g. 2.5">
+											<div *ngIf="submitted && f['weight'].errors" class="text-danger small">
+												<span *ngIf="f['weight'].errors?.['required']">Required</span>
+												<span *ngIf="f['weight'].errors?.['pattern'] || f['weight'].errors?.['min']">Must be a positive number</span>
+											</div>
+										</div>
+										<div class="mb-2">
+											<label class="form-label">Pickup Date & Time</label>
+											<input type="datetime-local" class="form-control" formControlName="pickupDateTime">
+											<div *ngIf="submitted && f['pickupDateTime'].errors" class="text-danger small">Required</div>
+										</div>
+									</div>
+								</div>
+								<!-- Price Estimation -->
+								<div class="col-12 col-md-6">
+									<div class="border rounded-3 p-3 h-100 bg-light mt-3 mt-md-0 d-flex flex-column justify-content-between">
+										<h5 class="mb-3"><i class="bi bi-cash-coin"></i> Price</h5>
+										<div class="mb-2 flex-grow-1">
+											<label class="form-label">Estimation</label>
+											<input type="text" class="form-control" formControlName="price" readonly>
+										</div>
+										<button type="submit" class="btn btn-primary w-100 mt-3"><i class="bi bi-send"></i> Book Courier</button>
+									</div>
 								</div>
 							</div>
-							<div class="mb-3">
-								<label>Sender Address</label>
-								<textarea class="form-control" formControlName="senderAddress"></textarea>
-								<div *ngIf="submitted && f['senderAddress'].errors" class="text-danger small">Required</div>
-							</div>
-							<h4 class="mb-3 mt-4">Receiver Details</h4>
-							<div class="mb-3">
-								<label>Receiver Name</label>
-								<input type="text" class="form-control" formControlName="receiverName">
-								<div *ngIf="submitted && f['receiverName'].errors" class="text-danger small">Required</div>
-							</div>
-							<div class="mb-3">
-								<label>Receiver Phone</label>
-								<input type="tel" class="form-control" formControlName="receiverPhone">
-								<div *ngIf="submitted && f['receiverPhone'].errors" class="text-danger small">
-									<span *ngIf="f['receiverPhone'].errors?.['required']">Required</span>
-									<span *ngIf="f['receiverPhone'].errors?.['pattern']">Invalid phone number</span>
-								</div>
-							</div>
-							<div class="mb-3">
-								<label>Receiver Address</label>
-								<textarea class="form-control" formControlName="receiverAddress"></textarea>
-								<div *ngIf="submitted && f['receiverAddress'].errors" class="text-danger small">Required</div>
-							</div>
-							<h4 class="mb-3 mt-4">Package Details</h4>
-							<div class="mb-3">
-								<label>Package Weight (kg)</label>
-								<input type="number" min="0.01" step="0.01" class="form-control" formControlName="weight">
-								<div *ngIf="submitted && f['weight'].errors" class="text-danger small">
-									<span *ngIf="f['weight'].errors?.['required']">Required</span>
-									<span *ngIf="f['weight'].errors?.['pattern'] || f['weight'].errors?.['min']">Must be a positive number</span>
-								</div>
-							</div>
-							<div class="mb-3">
-								<label>Pickup Date & Time</label>
-								<input type="datetime-local" class="form-control" formControlName="pickupDateTime">
-								<div *ngIf="submitted && f['pickupDateTime'].errors" class="text-danger small">Required</div>
-							</div>
-							<div class="mb-3">
-								<label>Price Estimation</label>
-								<input type="text" class="form-control" formControlName="price" readonly>
-							</div>
-							<button type="submit" class="btn btn-primary w-100">Book Courier</button>
 						</form>
+					</div>
+				</div>
 			</div>
-			<div *ngIf="confirmation" class="card mt-4">
+			<div *ngIf="confirmation" class="card shadow-lg border-0 mt-4 animate__animated animate__fadeIn">
 				<div class="card-body">
-					<h5 class="card-title">Booking Confirmed!</h5>
-					<p class="card-text"><strong>Sender:</strong> {{confirmation.senderName}}, {{confirmation.senderPhone}}, {{confirmation.senderAddress}}</p>
-					<p class="card-text"><strong>Receiver:</strong> {{confirmation.receiverName}}, {{confirmation.receiverPhone}}, {{confirmation.receiverAddress}}</p>
-					<p class="card-text"><strong>Weight:</strong> {{confirmation.weight}} kg</p>
-					<p class="card-text"><strong>Pickup:</strong> {{confirmation.pickupDateTime | date:'medium'}}</p>
-					<p class="card-text"><strong>Price:</strong> Rs. {{confirmation.price}}</p>
-                    <div class="d-flex justify-content-between">
-					<button class="btn btn-success w-50 m-2" (click)="newBooking()">Book Another</button>
-                    <button class="btn btn-secondary w-50 m-2" (click)="close()">Close</button>
-                    </div>
+					<h4 class="card-title text-success text-center mb-3"><i class="bi bi-check-circle-fill"></i> Booking Confirmed!</h4>
+					<ul class="list-group list-group-flush mb-3">
+						<li class="list-group-item"><strong>Sender:</strong> {{confirmation.senderName}}, {{confirmation.senderPhone}}, {{confirmation.senderAddress}}</li>
+						<li class="list-group-item"><strong>Receiver:</strong> {{confirmation.receiverName}}, {{confirmation.receiverPhone}}, {{confirmation.receiverAddress}}</li>
+						<li class="list-group-item"><strong>Weight:</strong> {{confirmation.weight}} kg</li>
+						<li class="list-group-item"><strong>Pickup:</strong> {{confirmation.pickupDateTime | date:'medium'}}</li>
+						<li class="list-group-item"><strong>Price:</strong> Rs. {{confirmation.price}}</li>
+					</ul>
+					<div class="d-flex gap-2">
+						<button class="btn btn-success flex-fill" (click)="newBooking()"><i class="bi bi-plus-circle"></i> Book Another</button>
+						<button class="btn btn-secondary flex-fill" (click)="close()"><i class="bi bi-x-circle"></i> Close</button>
+					</div>
 				</div>
 			</div>
 		</div>
