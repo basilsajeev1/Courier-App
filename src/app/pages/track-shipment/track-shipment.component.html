@@ -1,1 +1,22 @@
-<p>track-shipment works!</p>
+<div class="track-shipment-container">
+	<h2>Track Your Shipment</h2>
+	<form (ngSubmit)="onSubmit()" #trackForm="ngForm">
+		<label for="trackingNumber">Tracking Number:</label>
+		<input
+			type="text"
+			id="trackingNumber"
+			name="trackingNumber"
+			[(ngModel)]="trackingNumber"
+			required
+			placeholder="Enter tracking number"
+		/>
+		<button type="submit" [disabled]="!trackForm.form.valid">Track</button>
+	</form>
+
+	<div *ngIf="submitted && trackingDetails" class="tracking-details">
+		<h3>Tracking Details</h3>
+		<p><strong>Status:</strong> {{ trackingDetails.status }}</p>
+		<p><strong>ETA:</strong> {{ trackingDetails.eta }}</p>
+		<p><strong>Location:</strong> {{ trackingDetails.location }}</p>
+	</div>
+</div>

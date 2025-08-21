@@ -1,0 +1,22 @@
+[
+  {
+    "status": "Picked Up",
+    "eta": "2025-08-22",
+    "location": "Warehouse A"
+  },
+  {
+    "status": "In Transit",
+    "eta": "2025-08-23",
+    "location": "Distribution Center"
+  },
+  {
+    "status": "Out for Delivery",
+    "eta": "2025-08-21",
+    "location": "On the way"
+  },
+  {
+    "status": "Delivered",
+    "eta": "2025-08-20",
+    "location": "Door Number 123, 456 Main St, Cityville, State, 12345"
+  }
+]
