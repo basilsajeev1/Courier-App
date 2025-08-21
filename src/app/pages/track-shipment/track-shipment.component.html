@@ -1,22 +1,48 @@
-<div class="track-shipment-container">
-	<h2>Track Your Shipment</h2>
-	<form (ngSubmit)="onSubmit()" #trackForm="ngForm">
-		<label for="trackingNumber">Tracking Number:</label>
-		<input
-			type="text"
-			id="trackingNumber"
-			name="trackingNumber"
-			[(ngModel)]="trackingNumber"
-			required
-			placeholder="Enter tracking number"
-		/>
-		<button type="submit" [disabled]="!trackForm.form.valid">Track</button>
-	</form>
+<div class="container py-4">
+	<div class="row justify-content-center">
+		<div class="col-12 col-md-8 col-lg-6">
+			<div class="card shadow-lg border-0">
+				<div class="card-body p-4">
+					<h2 class="mb-4 text-center text-primary fw-bold">
+						<i class="bi bi-geo-alt-fill me-2"></i>Track Your Shipment
+					</h2>
+					<form (ngSubmit)="onSubmit()" #trackForm="ngForm" autocomplete="off">
+						<div class="mb-3">
+							<label for="trackingNumber" class="form-label fw-semibold">Tracking Number</label>
+							<div class="input-group">
+								<span class="input-group-text bg-white"><i class="bi bi-upc-scan"></i></span>
+								<input
+									type="text"
+									id="trackingNumber"
+									name="trackingNumber"
+									class="form-control"
+									[(ngModel)]="trackingNumber"
+									required
+									placeholder="Enter tracking number"
+								/>
+							</div>
+						</div>
+						<div class="d-grid">
+							<button type="submit" class="btn btn-primary btn-lg shadow-sm" [disabled]="!trackForm.form.valid">
+								<i class="bi bi-search me-1"></i>Track
+							</button>
+						</div>
+					</form>
 
-	<div *ngIf="submitted && trackingDetails" class="tracking-details">
-		<h3>Tracking Details</h3>
-		<p><strong>Status:</strong> {{ trackingDetails.status }}</p>
-		<p><strong>ETA:</strong> {{ trackingDetails.eta }}</p>
-		<p><strong>Location:</strong> {{ trackingDetails.location }}</p>
+					<div *ngIf="submitted && trackingDetails" class="mt-5">
+						<div class="card border-success shadow-sm">
+							<div class="card-header bg-success text-white fw-bold">
+								<i class="bi bi-truck me-2"></i>Tracking Details
+							</div>
+							<div class="card-body">
+								<p class="mb-2"><strong>Status:</strong> <span class="badge bg-info text-dark">{{ trackingDetails.status }}</span></p>
+								<p class="mb-2"><strong>ETA:</strong> <i class="bi bi-calendar-event me-1"></i>{{ trackingDetails.eta }}</p>
+								<p class="mb-0"><strong>Location:</strong> <i class="bi bi-geo-alt me-1"></i>{{ trackingDetails.location }}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
